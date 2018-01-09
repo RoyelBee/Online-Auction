@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="auctionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Bid">
+          <Key>
+            <PropertyRef Name="B_ID" />
+          </Key>
+          <Property Name="B_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Time" Type="datetime" />
+          <Property Name="PropertyID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Property">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="MinPrice" Type="float" />
+          <Property Name="Details" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="RelationBetweenPropertyAndBid">
+          <End Role="tbl_Property" Type="Self.tbl_Property" Multiplicity="0..1" />
+          <End Role="tbl_Bid" Type="Self.tbl_Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Property">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="tbl_Bid">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="auctionModelStoreContainer">
+          <EntitySet Name="tbl_Bid" EntityType="Self.tbl_Bid" Schema="dbo" Table="tbl.Bid" store:Type="Tables" />
+          <EntitySet Name="tbl_Property" EntityType="Self.tbl_Property" Schema="dbo" Table="tbl.Property" store:Type="Tables" />
+          <AssociationSet Name="RelationBetweenPropertyAndBid" Association="Self.RelationBetweenPropertyAndBid">
+            <End Role="tbl_Property" EntitySet="tbl_Property" />
+            <End Role="tbl_Bid" EntitySet="tbl_Bid" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="auctionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="auctionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Bid" EntityType="auctionModel.tbl_Bid" />
+          <EntitySet Name="tbl_Property" EntityType="auctionModel.tbl_Property" />
+          <AssociationSet Name="RelationBetweenPropertyAndBid" Association="auctionModel.RelationBetweenPropertyAndBid">
+            <End Role="tbl_Property" EntitySet="tbl_Property" />
+            <End Role="tbl_Bid" EntitySet="tbl_Bid" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_Bid">
+          <Key>
+            <PropertyRef Name="B_ID" />
+          </Key>
+          <Property Name="B_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Time" Type="DateTime" Precision="3" />
+          <Property Name="PropertyID" Type="Int32" />
+          <NavigationProperty Name="tbl_Property" Relationship="auctionModel.RelationBetweenPropertyAndBid" FromRole="tbl_Bid" ToRole="tbl_Property" />
+        </EntityType>
+        <EntityType Name="tbl_Property">
+          <Key>
+            <PropertyRef Name="P_ID" />
+          </Key>
+          <Property Name="P_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MinPrice" Type="Double" />
+          <Property Name="Details" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_Bid" Relationship="auctionModel.RelationBetweenPropertyAndBid" FromRole="tbl_Property" ToRole="tbl_Bid" />
+        </EntityType>
+        <Association Name="RelationBetweenPropertyAndBid">
+          <End Type="auctionModel.tbl_Property" Role="tbl_Property" Multiplicity="0..1" />
+          <End Type="auctionModel.tbl_Bid" Role="tbl_Bid" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Property">
+              <PropertyRef Name="P_ID" />
+            </Principal>
+            <Dependent Role="tbl_Bid">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="auctionModelStoreContainer" CdmEntityContainer="auctionEntities">
+          <EntitySetMapping Name="tbl_Bid">
+            <EntityTypeMapping TypeName="auctionModel.tbl_Bid">
+              <MappingFragment StoreEntitySet="tbl_Bid">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="B_ID" ColumnName="B_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Property">
+            <EntityTypeMapping TypeName="auctionModel.tbl_Property">
+              <MappingFragment StoreEntitySet="tbl_Property">
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

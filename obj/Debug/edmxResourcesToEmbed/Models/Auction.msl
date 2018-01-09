@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="auctionModelStoreContainer" CdmEntityContainer="auctionEntities">
+    <EntitySetMapping Name="tbl_Bid">
+      <EntityTypeMapping TypeName="auctionModel.tbl_Bid">
+        <MappingFragment StoreEntitySet="tbl_Bid">
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="B_ID" ColumnName="B_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_Property">
+      <EntityTypeMapping TypeName="auctionModel.tbl_Property">
+        <MappingFragment StoreEntitySet="tbl_Property">
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="P_ID" ColumnName="P_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

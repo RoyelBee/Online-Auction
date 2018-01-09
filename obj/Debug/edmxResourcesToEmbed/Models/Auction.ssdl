@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="auctionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_Bid">
+    <Key>
+      <PropertyRef Name="B_ID" />
+    </Key>
+    <Property Name="B_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="float" />
+    <Property Name="Time" Type="datetime" />
+    <Property Name="PropertyID" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_Property">
+    <Key>
+      <PropertyRef Name="P_ID" />
+    </Key>
+    <Property Name="P_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="MinPrice" Type="float" />
+    <Property Name="Details" Type="varchar" MaxLength="250" />
+  </EntityType>
+  <Association Name="RelationBetweenPropertyAndBid">
+    <End Role="tbl_Property" Type="Self.tbl_Property" Multiplicity="0..1" />
+    <End Role="tbl_Bid" Type="Self.tbl_Bid" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_Property">
+        <PropertyRef Name="P_ID" />
+      </Principal>
+      <Dependent Role="tbl_Bid">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="auctionModelStoreContainer">
+    <EntitySet Name="tbl_Bid" EntityType="Self.tbl_Bid" Schema="dbo" Table="tbl.Bid" store:Type="Tables" />
+    <EntitySet Name="tbl_Property" EntityType="Self.tbl_Property" Schema="dbo" Table="tbl.Property" store:Type="Tables" />
+    <AssociationSet Name="RelationBetweenPropertyAndBid" Association="Self.RelationBetweenPropertyAndBid">
+      <End Role="tbl_Property" EntitySet="tbl_Property" />
+      <End Role="tbl_Bid" EntitySet="tbl_Bid" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
